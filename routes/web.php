@@ -59,3 +59,6 @@ Route::get('usersnoalbums',function(){
         ->get();
     return $usersnoalbum;
 });
+
+//images
+Route::resource('photos','PhotosController');
