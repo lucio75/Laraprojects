@@ -80,8 +80,33 @@ class PhotosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Photo $photo)
     {
-        return Photo::destroy($id);
+        $photo=$photo->delete();
+        if($res){
+            $this->processFile($photo->id)
+        }
+        //return Photo::destroy($id);
+    }
+
+    public function processFile( Photo $photo &$photo,Request $req=null)
+    {
+        if(!$req->hasFile('img_paths')){
+
+            return false;
+        }
+
+        $file = $req->file('album_thumb');
+
+        if(!$file->isValid()){
+
+            return false;
+        }
+
+        $fileName = $id . '.' . $file->extension();
+        $file->storeAs(env('IMG_DIR'), $fileName);
+        $album->album_thumb = env('ALBUM_THUMB_DIR') . '/' . $fileName;
+
+        return true;
     }
 }
