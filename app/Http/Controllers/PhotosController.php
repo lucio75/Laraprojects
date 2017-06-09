@@ -57,9 +57,9 @@ class PhotosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Photo $photo)
     {
-        //
+
     }
 
     /**
@@ -80,8 +80,41 @@ class PhotosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Photo $photo)
     {
-        Photo::findOrFail($id)->destroy();
+        $res =  $photo->delete();
+        if($res){
+            $this->processFile($photo) ;
+        }
+        return ''.$res;
     }
+    public function processFile(Photo &$photo,  Request $req= null )
+    {
+        if(!$req){
+            $req = request();
+        }
+        if(!$req->hasFile('img_path') ){
+            return false;
+        }
+        $file = $req->file('img_path');
+        if(!$file->isValid()){
+            return false;
+        }
+        //$fileName = $file->store(env('ALBUM_THUMB_DIR'));
+        $imgName = preg_replace("@\W@",'_', $photo->name);
+
+        $fileName = $imgName. '.' . $file->extension();
+        $file->storeAs(env('IMG_DIR').'/'.$photo->album_id, $fileName);
+        $photo->img_path = env('IMG_DIR') .$photo->album_id .'/'.$fileName;
+        return  true;
+    }
+    public function deleteFile(Photo $photo)
+    {
+        $disk = config('filesystems.default');
+        if($photo->img_path && Storage::disk($disk)->has($photo->img_path)){
+            return   Storage::disk($disk)->delete($photo->img_path);
+        }
+        return false;
+    }
+
 }

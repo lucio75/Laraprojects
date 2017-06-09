@@ -18,8 +18,11 @@
                 <img width="120" src="{{asset($image->img_path)}}"/>
             </td>
             <td>
+
                 <a href="{{route('photos.destroy',$image->id)}}"
                    class="btn btn-danger">DELETE</a>
+
+
             </td>
         </tr>
         @empty
@@ -48,8 +51,13 @@
                             complete : function(resp){
                                 console.log(resp);
                                 if(resp.responseText == 1){
+
                                     //alert(resp.responseText);
                                     tr.parentNode.removeChild(tr);
+
+                                    alert(resp.responseText);
+                                    tr.parentNode.removeChild(li);
+
 
                                 }else{
                                     alert('Problem connecting server');
