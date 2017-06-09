@@ -18,11 +18,8 @@
                 <img width="120" src="{{asset($image->img_path)}}"/>
             </td>
             <td>
-
-                <a href="{{route('photos.destroy',$image->id)}}"
-                   class="btn btn-danger">DELETE</a>
-
-
+                <a href="{{route('photos.edit',$image->id)}}" class="btn btn-default">MODIFICA</a>
+                <a href="{{route('photos.destroy',$image->id)}}" class="btn btn-danger">DELETE</a>
             </td>
         </tr>
         @empty
@@ -32,35 +29,30 @@
             @endforelse
 </table>
     @endsection
-
 @section('footer')
     @parent
     <script>
-        $('document').ready(function(){
-            //$('div.alert').fadeOut(3000);
-            $('table').on('click','a.btn-danger',function(e){
-                e.preventDefault();
-                var urlAlbum=$(this).attr('href');
-                var tr = e.target.parentNode.parentNode;
-                $.ajax(urlAlbum,
+        $('document').ready(function () {
+            //$('div.alert').fadeOut(5000);
+            $('table').on('click', 'a.btn-danger',function (ele) {
+                ele.preventDefault();
+                var urlImg =   $(this).attr('href');
+                var tr = ele.target.parentNode.parentNode;
+                $.ajax(
+                        urlImg,
                         {
                             method: 'DELETE',
-                            data :{
+                            data : {
                                 '_token' : '{{csrf_token()}}'
                             },
-                            complete : function(resp){
+                            complete : function (resp) {
                                 console.log(resp);
                                 if(resp.responseText == 1){
-
-                                    //alert(resp.responseText);
+                                    //  alert(resp.responseText)
                                     tr.parentNode.removeChild(tr);
-
-                                    alert(resp.responseText);
-                                    tr.parentNode.removeChild(li);
-
-
-                                }else{
-                                    alert('Problem connecting server');
+                                    // $(li).remove();
+                                } else {
+                                    alert('Problem contacting server');
                                 }
                             }
                         }
