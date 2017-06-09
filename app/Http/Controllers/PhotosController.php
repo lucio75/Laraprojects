@@ -82,6 +82,6 @@ class PhotosController extends Controller
      */
     public function destroy($id)
     {
-        Photo::findOrFail($id)->destroy();
+        return Photo::destroy($id);
     }
 }
