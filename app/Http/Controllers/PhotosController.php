@@ -11,7 +11,7 @@ class PhotosController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Http\Response|static[]
      */
     public function index()
     {
@@ -43,7 +43,7 @@ class PhotosController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Photo
      */
     public function show(Photo $photo)
     {
