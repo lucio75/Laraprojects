@@ -3,7 +3,6 @@ namespace LaraCourse\Http\Controllers;
 
 use Illuminate\Http\Request;
 use LaraCourse\Models\Album;
-use DB;
 use LaraCourse\Models\Photo;
 use Storage;
 class AlbumsController extends Controller
@@ -118,7 +117,7 @@ class AlbumsController extends Controller
             return true;
     }
 
-    public function getimages(album $album){
+    public function getImages(album $album){
 
        $images=Photo::where('album_id',$album->id)->get();
         return view('images.albumimages',compact('album','images'));

@@ -34,7 +34,8 @@ Route::get('/albums/create','AlbumsController@create')->name('albums.create');
 
 Route::post('/albums/create','AlbumsController@save')->name('albums.save');
 
-Route::get('/albums/{album}/images','AlbumsController@getimages')->name('albums.getimages')
+Route::get('/albums/{album}/images','AlbumsController@getImages')
+    ->name('album.getImages')
     ->where('album','[0-9]+');
 
 Route::get('/albums/{id}','AlbumsController@show')->where('id','[0-9]+');

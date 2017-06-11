@@ -27,5 +27,18 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Photo extends Model
 {
-    protected $table ='Photos';
+   // protected $table ='Photos';
+
+    public function  getImgPathAttribute($value){
+
+        if(stristr($value ,'http') === false){
+            $value = 'storage/'.$value;
+        }
+        return $value;
+    }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name']=strtoupper($value);
+    }
 }

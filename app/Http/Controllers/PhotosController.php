@@ -4,8 +4,11 @@ namespace LaraCourse\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use LaraCourse\Models\Album;
+
 use LaraCourse\Models\Photo;
 
+use Storage;
 class PhotosController extends Controller
 {
     /**
@@ -47,7 +50,7 @@ class PhotosController extends Controller
      */
     public function show(Photo $photo)
     {
-       return $photo;
+       dd($photo) ;
 
     }
 
@@ -69,9 +72,19 @@ class PhotosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $photo)
+    public function update(Request $request, Photo $photo)
     {
-       dd($photo) ;
+
+        $this->processFile($photo);
+
+        $photo->name=$request->input('name');
+        $photo->description=$request->input('description');
+        $res=$photo->save();
+
+        $messaggio = $res ? 'Image '. $photo->name .' Updated' :
+            'Image '. $photo->name.' was not updated';
+        session()->flash('message',$messaggio);
+        return redirect()->route('album.getImages', $photo->album_id);
     }
 
     /**
@@ -105,7 +118,7 @@ class PhotosController extends Controller
 
         $fileName = $imgName. '.' . $file->extension();
         $file->storeAs(env('IMG_DIR').'/'.$photo->album_id, $fileName);
-        $photo->img_path = env('IMG_DIR') .$photo->album_id .'/'.$fileName;
+        $photo->img_path = env('IMG_DIR').'/'.$photo->album_id .'/'.$fileName;
         return  true;
     }
     public function deleteFile(Photo $photo)
@@ -116,5 +129,6 @@ class PhotosController extends Controller
         }
         return false;
     }
+
 
 }

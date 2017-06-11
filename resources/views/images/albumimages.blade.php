@@ -1,8 +1,13 @@
 @extends('template.default')
 @section('content')
+<h1>Images for {{$album->album_name}}</h1>
+    @if(session()->has('message'))
+        @component('components.alert-info')
+        {{session()->get('message')}}
+        @endcomponent
+    @endif
 <table class="table table-bordered">
     <tr>
-      <th>ID</th>
         <th>CREATED DATE</th>
         <th>TITLE</th>
         <th>ALBUM</th>
@@ -10,7 +15,6 @@
     </tr>
     @forelse($images as $image)
         <tr>
-            <td>{{$image->id}}</td>
             <td>{{$image->created_at}}</td>
             <td>{{$image->name}}</td>
             <td>{{$album->album_name}}</td>
@@ -18,8 +22,8 @@
                 <img width="120" src="{{asset($image->img_path)}}"/>
             </td>
             <td>
-                <a href="{{route('photos.edit',$image->id)}}" class="btn btn-default">MODIFICA</a>
-                <a href="{{route('photos.destroy',$image->id)}}" class="btn btn-danger">DELETE</a>
+                <a href="{{route('photos.edit',$image->id)}}" class="btn btn-sm btn-primary">MODIFICA</a>
+                <a href="{{route('photos.destroy',$image->id)}}" class="btn btn-sm btn-danger">DELETE</a>
             </td>
         </tr>
         @empty
