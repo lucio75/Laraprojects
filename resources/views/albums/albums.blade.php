@@ -31,6 +31,15 @@
         @endforeach
         </ul>
     </form>
+    <tr>
+        <td colspan="6" class="text-center">
+            <div class="row">
+                <div class="col-md-3 push-9">
+                    {{$albums->links('vendor.pagination.bootstrap-4')}}
+                </div>
+            </div>
+        </td>
+    </tr>
 @endsection
 
 @section('footer')

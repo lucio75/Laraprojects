@@ -16,7 +16,7 @@ class AlbumsController extends Controller
         if($request->has('album_name')){
             $queryBuilder->where('album_name','like','%'.$request->input('album_name').'%');
         }
-        $album=$queryBuilder->get();
+        $album=$queryBuilder->paginate(env('IMG_PER_PAGE'));
         return view('albums.albums',['albums'=> $album]);
 
     }
@@ -119,7 +119,7 @@ class AlbumsController extends Controller
 
     public function getImages(album $album){
 
-       $images=Photo::where('album_id',$album->id)->get();
+       $images=Photo::where('album_id',$album->id)->paginate(env('IMG_PER_PAGE'));
         return view('images.albumimages',compact('album','images'));
     }
 
