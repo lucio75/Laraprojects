@@ -1,34 +1,24 @@
 <?php
-
 namespace LaraCourse\Models;
-
 use Illuminate\Database\Eloquent\Model;
-
-/**
- * LaraCourse\Models\Photo
- *
- * @property int $id
- * @property string $name
- * @property string $description
- * @property int $album_id
- * @property string $deleted_at
- * @property string $img_path
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Query\Builder|\LaraCourse\Models\Photo whereAlbumId($value)
- * @method static \Illuminate\Database\Query\Builder|\LaraCourse\Models\Photo whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\LaraCourse\Models\Photo whereDeletedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\LaraCourse\Models\Photo whereDescription($value)
- * @method static \Illuminate\Database\Query\Builder|\LaraCourse\Models\Photo whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\LaraCourse\Models\Photo whereImgPath($value)
- * @method static \Illuminate\Database\Query\Builder|\LaraCourse\Models\Photo whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\LaraCourse\Models\Photo whereUpdatedAt($value)
- * @mixin \Eloquent
- */
+use function strtoupper;
 class Photo extends Model
 {
-   // protected $table ='Photos';
+    protected $fillable =['name','img_path','description'];
 
+    public  function  album()
+    {
+        // $this>$this->belongsTo(Album::class,'album_id','id');
+        return $this->belongsTo(Album::class);
+    }
+    //img_path
+    public function  getPathAttribute(){
+        $url = $this->attributes['img_path'];
+        if(stristr($url ,'http') === false){
+            $url = 'storage/'.$url;
+        }
+        return $url;
+    }
     public function  getImgPathAttribute($value){
 
         if(stristr($value ,'http') === false){
@@ -36,9 +26,8 @@ class Photo extends Model
         }
         return $value;
     }
-
-    public function setNameAttribute($value)
+    public function  setNameAttribute($value)
     {
-        $this->attributes['name']=strtoupper($value);
+        $this->attributes['name'] = strtoupper($value);
     }
 }

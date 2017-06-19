@@ -123,4 +123,6 @@ class AlbumsController extends Controller
         return view('images.albumimages',compact('album','images'));
     }
 
+
+
 }
