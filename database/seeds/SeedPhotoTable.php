@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use LaraCourse\Models\Photo;
+use LaraCourse\Models\Album;
 class SeedPhotoTable extends Seeder
 {
     /**
@@ -11,7 +12,11 @@ class SeedPhotoTable extends Seeder
      */
     public function run()
     {
-
-        factory(LaraCourse\Models\Photo::class,30)->create();
+        $albums = Album::get();
+        foreach($albums as $album){
+            factory(LaraCourse\Models\Photo::class,200)->create(
+                ['album_id'=>$album ->id]
+            );
+        }
     }
 }
