@@ -2,6 +2,7 @@
 namespace LaraCourse\Http\Controllers;
 
 use Illuminate\Http\Request;
+use LaraCourse\Http\Requests\AlbumRequest;
 use LaraCourse\Models\Album;
 use LaraCourse\Models\Photo;
 use Storage;
@@ -48,7 +49,7 @@ class AlbumsController extends Controller
      * @param Request $req
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store($id, Request $req){
+    public function store($id, AlbumRequest $req){
 
        $album=Album::find($id);
         $album->album_name = request()->input('name');
@@ -69,12 +70,12 @@ class AlbumsController extends Controller
         return view('albums.createalbum',['album'=>$album]);
     }
 
-    public function save(){
+    public function save(AlbumRequest $request){
 
         $album = new Album();
-        $album->album_name = request()->input('name');
+        $album->album_name = $request->input('name');
         $album->album_thumb ='';
-        $album->description = request()->input('description');
+        $album->description = $request->input('description');
         $album->user_id = 1;
 
         $res=$album->save();

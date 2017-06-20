@@ -1,6 +1,6 @@
 <?php
 
-//use LaraCourse\Models\Album;
+use LaraCourse\Models\Album;
 
 use LaraCourse\Models\Photo;
 
@@ -33,6 +33,7 @@ Route::get('/albums','AlbumsController@index')->name('albums');
 Route::get('/albums/create','AlbumsController@create')->name('albums.create');
 
 Route::post('/albums/create','AlbumsController@save')->name('albums.save');
+
 
 Route::get('/albums/{album}/images','AlbumsController@getImages')
     ->name('album.getImages')

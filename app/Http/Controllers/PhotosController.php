@@ -11,11 +11,19 @@ use LaraCourse\Models\Photo;
 use Storage;
 class PhotosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Http\Response|static[]
-     */
+    protected $rules = [
+        'album_id' => 'required|integer|exists:albums,id',
+        'name' => 'required',
+        'description' => 'required',
+        'img_path' => 'required|image'
+    ];
+
+    protected $errorMessages = [
+        'album_id.required' => 'Il campo Album è obbligatorio',
+        'description.required' => 'Il campo Descrizione è obbligatorio',
+        'name.required' => 'Il campo Nome è obbligatorio',
+        'img_path.required' => 'Il campo Immagine è obbligatorio'
+    ];
     public function index()
     {
         return Photo::get();
@@ -34,7 +42,7 @@ class PhotosController extends Controller
 
         $photo=new Photo();
         $albums = $this->getAlbums();
-        return view('images.editimage',compact('album','photo'));
+        return view('images.editimage',compact('albums','album','photo'));
     }
 
     /**
@@ -45,7 +53,18 @@ class PhotosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $this->validate($request, $this->rules,$this->errorMessages);
+
+        $photo = new Photo();
+        $photo->name = $request->input('name');
+        $photo->description = $request->input('description');
+        $photo->album_id = $request->input('album_id');
+
+
+        $this->processFile($photo);
+        $photo->save();
+        return redirect(route('album.getImages',$photo->album_id));
     }
 
     /**
@@ -82,9 +101,9 @@ class PhotosController extends Controller
      */
     public function update(Request $request, Photo $photo)
     {
-
+        $this->validate($request, $this->rules,$this->errorMessages);
         $this->processFile($photo);
-
+        $photo->album_id= $request->album_id;
         $photo->name=$request->input('name');
         $photo->description=$request->input('description');
         $res=$photo->save();

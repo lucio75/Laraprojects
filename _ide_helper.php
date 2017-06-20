@@ -10775,7 +10775,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Get the rendered contents of a partial from a loop.
+         * Get the rendered contents of a partials from a loop.
          *
          * @param string $view
          * @param array $data

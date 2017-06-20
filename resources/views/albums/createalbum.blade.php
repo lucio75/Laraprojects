@@ -1,6 +1,7 @@
 @extends('template.default')
 @section('content')
     <h1>NEW ALBUM</h1>
+    @include('partial.inputerrors')
     <form action="{{route('albums.save')}}" method="post" enctype="multipart/form-data">
         {{csrf_field()}}
         <div class="form-group">

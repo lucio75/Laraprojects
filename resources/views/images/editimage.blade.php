@@ -1,9 +1,18 @@
 @extends('template.default')
 @section('content')
-    <h1>EDIT PHOTO</h1>
+    <h1>
+        @if($photo->id)
+            UPDATE IMAGE
+            @else
+        NEW IMAGE
+
+            @endif
+    </h1>
+
+
     @if($photo->id)
-    <form action="{{route('photos.update',$photo->id)}}" method="post" enctype="multipart/form-data">
-        {{csrf_field()}}{{method_field('PATCH')}}
+    <form action="{{route('photos.update',$photo->id)}}" method="post" enctype="multipart/for@include('partial.inputerrors')m-data">
+        {{method_field('PATCH')}}
         @else
             <form action="{{route('photos.store')}}" method="post" enctype="multipart/form-data">
                 @endif
@@ -23,8 +32,8 @@
 
 
                 </div>
-        <input type="hidden" name="album_id" value="{{$photo->album_id?$photo->album_id:$album->id}}">
         @include('images.partial.fileUpload')
+                {{csrf_field()}}
         <div class="form-group">
             <label for="Description">Description</label>
             <textarea name="description" id="description" class="form-control"
@@ -33,6 +42,7 @@
             </textarea>
 
         </div>
+
         <button class="btn btn-primary">Submit</button>
     </form>
 @stop

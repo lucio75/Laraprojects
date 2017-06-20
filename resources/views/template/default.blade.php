@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title','Home')</title>
 
@@ -33,6 +34,10 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{route('albums.create')}}">New Album</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('photos.create')}}">New Image</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>

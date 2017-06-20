@@ -1,6 +1,7 @@
 @extends('template.default')
 @section('content')
 <h1>EDIT ALBUM</h1>
+@include('partial.inputerrors')
     <form action="/albums/{{$album->id}}" method="post" enctype="multipart/form-data">
         {{csrf_field()}}
         <input type="hidden" name="_method" value="PATCH">
