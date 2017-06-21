@@ -9,7 +9,7 @@
             @endif
     </h1>
 
-
+    @include('partial.inputerrors')
     @if($photo->id)
     <form action="{{route('photos.update',$photo->id)}}" method="post" enctype="multipart/for@include('partial.inputerrors')m-data">
         {{method_field('PATCH')}}
@@ -18,13 +18,13 @@
                 @endif
         <div class="form-group">
             <label for="Name">Name</label>
-            <input type="text" name="name" id="name" value="{{$photo->name}}" class="form-control"
+            <input type="text" name="name" id="name" value="{{old('name',$photo->name)}}" class="form-control"
                    placeholder="Photo name" aria-describedby="helpId">
 
         </div>
                 <div class="form-group">
-                    <select class="form-control" required name="album_id" id="album_id">
-                        <option value="">SELECT</option>
+                    <select class="form-control" name="album_id" id="album_id">
+                        <option value="{{old('album_name')}}">SELECT</option>
                         @foreach($albums as $item)
                             <option {{$item->id==$album->id?'selected' :''}} value="{{$item->id}}">{{$item->album_name}}</option>
                         @endforeach
@@ -38,11 +38,10 @@
             <label for="Description">Description</label>
             <textarea name="description" id="description" class="form-control"
                       placeholder="Description" aria-describedby="helpId">
-        {{$photo->description}}
+        {{old('description',$photo->description)}}
             </textarea>
 
         </div>
-
         <button class="btn btn-primary">Submit</button>
     </form>
 @stop

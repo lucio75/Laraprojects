@@ -6,7 +6,7 @@
         {{csrf_field()}}
         <div class="form-group">
             <label for="Name">Name</label>
-            <input type="text" name="name" id="name" value="" class="form-control"
+            <input type="text" name="name" id="name" value="{{old('name')}}" class="form-control"
                        placeholder="Album name" aria-describedby="helpId">
 
         </div>
@@ -15,7 +15,7 @@
             <label for="Description">Description</label>
             <textarea name="description" id="description" class="form-control"
                           placeholder="Description" aria-describedby="helpId">
-
+                {{old('description',$album->description)}}
             </textarea>
 
         </div>

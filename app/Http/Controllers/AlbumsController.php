@@ -3,6 +3,7 @@ namespace LaraCourse\Http\Controllers;
 
 use Illuminate\Http\Request;
 use LaraCourse\Http\Requests\AlbumRequest;
+use LaraCourse\Http\Requests\AlbumUpdateRequest;
 use LaraCourse\Models\Album;
 use LaraCourse\Models\Photo;
 use Storage;
@@ -49,7 +50,7 @@ class AlbumsController extends Controller
      * @param Request $req
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store($id, AlbumRequest $req){
+    public function store($id, AlbumUpdateRequest $req){
 
        $album=Album::find($id);
         $album->album_name = request()->input('name');

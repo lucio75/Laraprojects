@@ -4,7 +4,7 @@ namespace LaraCourse\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AlbumRequest extends FormRequest
+class AlbumUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,18 +25,17 @@ class AlbumRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:albums,album_name',
-            'album_thumb' => 'required|image',
-            'description' => 'required'
+            'description' => 'required',
             //'user_id'=>'required'
         ];
     }
 
     public function message()
     {
-       return[
-           'name.required' => 'Il nome dell\'album è obbligatorio',
-           'album_thumb.required' => 'L\'immagine è obbligatoria',
-           'description.required' => 'La descrizione dell\'album è obbligatoria'
-       ];
+        return[
+            'name.required'=>'Il nome dell\'album è obbligatorio',
+            'album_thumb.required'=>'L\'immagine è obbligatoria',
+            'description.required'=>'La descrizione dell\'album è obbligatoria',
+        ];
     }
 }
